@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{%block title%}Tasks{%endblock title%}
+
+
+
+{% block content %}
+<h2>Task</h2>
+<a href="{% url 'Create_ToDo' %}">Create ToDo</a>
+<ol>
+    {% for todo in ToDo_list %}
+    <li role="button"
+    onclick="location.href='{% url "task" todo.id %}'">{{ todo.title }}</li>
+    {% endfor %}
+</ol>
+
+
+
+{% endblock content %}
