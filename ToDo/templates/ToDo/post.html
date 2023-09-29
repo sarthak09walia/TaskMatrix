@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 
-{%block title%}Tasks{%endblock title%}
-
-
+{% block title %}All Tasks{% endblock title %}
 
 {% block content %}
 <h2>Task</h2>
 <a href="{% url 'Create_ToDo' %}">Create ToDo</a>
+
+{% if ToDo_list %}
 <ol>
     {% for todo in ToDo_list %}
-    <li role="button"
-    onclick="location.href='{% url "task" todo.id %}'">{{ todo.title }}</li>
+    <li role="button" onclick="location.href='{% url 'task' todo.id %}'">{{ todo.title }}</li>
     {% endfor %}
 </ol>
-
-
+{% else %}
+<p>You don't have any tasks.</p>
+{% endif %}
 
 {% endblock content %}

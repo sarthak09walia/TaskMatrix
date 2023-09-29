@@ -12,7 +12,7 @@ def Create_ToDo(request):
         if form.is_valid():
             todo=Todo.objects.create(title=form.cleaned_data['title'], description=form.cleaned_data['description'],status=form.cleaned_data['status'],ToDO_User=request.user,due_date=form.cleaned_data['due_date'])
             messages.success(request, f'Task created successfully {todo.title}!')
-            return redirect('')
+            return redirect('Tasks')
         else:
             return render(request, 'ToDo/Create_ToDo.html', {'form': form})
     else:
@@ -47,4 +47,17 @@ def edit_task(request, id):
         form = ToDo_Create(instance=task)
 
     return render(request, 'ToDo/edit_task.html', {'form': form, 'task': task})
+
+
+@login_required
+def delete_task(request, id):
+    if request.method =='POST':
+        task = get_object_or_404(Todo, id=id)
+        messages.success(request, f'Task deleted successfully {task.title}!')
+        task.delete()
+        return redirect('Tasks')
+    elif request.method == 'GET':
+        task = get_object_or_404(Todo, id=id)
+        return render(request, 'ToDo/Delete_Task.html', {'task': task})
+
 
